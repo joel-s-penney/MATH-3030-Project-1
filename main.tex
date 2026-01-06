@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{graphicx, tabularx, geometry, xcolor, minted}
+\usepackage{caption, float}
+\usepackage{setspace, lipsum}
+
+\usepackage{tikz, pgfplots}
+\pgfplotsset{compat=1.18}
+
+\geometry{top=1 in, bottom=1 in, left=1 in, right=1 in}
+
+% \onehalfspacing
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\newtheorem{corollary}{Corollary}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+
+% \setlength\parindent{0 pt}
+
+\begin{document}
+
+\include{titlepage}
+
+% \tableofcontents
+% \newpage
+
+\section{Introduction}
+\noindent
+Text.
+
+\section{Methods}
+\noindent
+Text.
+
+\section{Results}
+\noindent
+Text.
+
+\section{Conclusion}
+\noindent
+Text.
+
+\addcontentsline{toc}{section}{Acknowledgements}
+\section*{Acknowledgements}
+\noindent
+Text.
+
+\addcontentsline{toc}{section}{References}
+% \include{ref}
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{mybib}
+
+\newpage
+\appendix
+
+\section{Appendix A}
+\noindent
+Text.
+
+\section{Appendix B}
+\noindent
+Text.
+
+\end{document}
