@@ -35,6 +35,30 @@
 Text.
 
 \section{Methods}
+
+\subsection{Preliminaries}
+\noindent
+Suppose we know a function $f$ and want to determine the value or values of $x$ such that \[f(x)=0.\]
+
+We may first try analytical methods to determine $x$, which is often convenient if $f$ is sufficiently basic, such as a polynomial of degree 1 or 2. Frequently, however, our function $f$ is more complicated or sophisticated, and analytical methods are impractical or unavailable. Instead, numerical methods are often imposed on \textit{root-finding problems} such as the one described. Root-finding algorithms (or root-finding methods) are used to approximate these roots or zeros, with the requirement that the function be continuous. Additionally, solving the equation \[g(x)=h(x)\] is equivalent to finding the roots of $f(x)=g(x)-h(x)$, which shows how widespread root-finding problems are and how important root-finding methods can be. 
+
+\begin{definition}
+    A \textit{polynomial of one variable}, denoted $p(x)$, is an expression that can be written in the form \[a_nx^x + a_{n-1}x^{x-1} + \cdots +a_1x + a_0\] where $a_n, ..., a_0$ are \textit{coefficients}, $a_n$ is nonzero, $x$ is a variable, and $n$ is the degree \cite{kalantari2008polynomial}. If the coefficients are real and the variable is restricted to the real numbers, then the expression is called a \textit{real polynomial}. The equation $p(x)=0$ is called a \textit{polynomial equation}.
+\end{definition}
+
+Each polynomial of one variable (or just polynomial for short) is continuous everywhere.
+
+\begin{theorem} [Fundamental Theorem of Algebra]
+    Every nonzero polynomial of one variable with complex coefficients has exactly $n$ complex roots, assuming multiplicity is counted.  
+\end{theorem}
+
+Many proofs of this famous theorem exist. They can be found in  \cite{steed2015proofs}, for example. Although we are primarily interested in \textit{real} roots, the theorem indicates exactly how many (complex) roots a polynomial must have, which is helpful for determining the set of all roots.
+
+\subsection{The Bisection Method}
+\noindent
+Text.
+
+\subsection{Newton's Method}
 \noindent
 Text.
 
