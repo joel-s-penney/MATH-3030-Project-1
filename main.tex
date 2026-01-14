@@ -40,23 +40,34 @@ Text.
 \noindent
 Suppose we know a function $f$ and want to determine the value or values of $x$ such that \[f(x)=0.\]
 
-We may first try analytical methods to determine $x$, which is often convenient if $f$ is sufficiently basic, such as a polynomial of degree 1 or 2. Frequently, however, our function $f$ is more complicated or sophisticated, and analytical methods are impractical or unavailable. Instead, numerical methods are often imposed on \textit{root-finding problems} such as the one described. Root-finding algorithms (or root-finding methods) are used to approximate these roots or zeros, with the requirement that the function be continuous. Additionally, solving the equation \[g(x)=h(x)\] is equivalent to finding the roots of $f(x)=g(x)-h(x)$, which shows how widespread root-finding problems are and how important root-finding methods can be. 
+We may first try analytical methods to determine $x$, which is often convenient if $f$ is sufficiently basic, such as a polynomial of degree 1 or 2. Frequently, however, our function $f$ is more complicated or sophisticated, and analytical methods are impractical or unavailable. Instead, numerical methods are often imposed on \textit{root-finding problems} such as the one described. Root-finding algorithms (or root-finding methods) are used to approximate the roots or zeros of a function, with the requirement that the function be continuous. Additionally, solving the equation \[g(x)=h(x)\] is equivalent to finding the roots of $f(x)=g(x)-h(x)$, which shows how widespread root-finding problems are and how important root-finding methods can be. 
 
 \begin{definition}
-    A \textit{polynomial of one variable}, denoted $p(x)$, is an expression that can be written in the form \[a_nx^x + a_{n-1}x^{x-1} + \cdots +a_1x + a_0\] where $a_n, ..., a_0$ are \textit{coefficients}, $a_n$ is nonzero, $x$ is a variable, and $n$ is the degree \cite{kalantari2008polynomial}. If the coefficients are real and the variable is restricted to the real numbers, then the expression is called a \textit{real polynomial}. The equation $p(x)=0$ is called a \textit{polynomial equation}.
+    A \textit{polynomial of one variable}, denoted $p(x)$, is an expression that can be written in the form \[a_nx^x + a_{n-1}x^{x-1} + \cdots +a_1x + a_0\] where $a_n, ..., a_0$ are coefficients, $a_n$ is nonzero, $x$ is a variable, and $n$ is the degree \cite{kalantari2008polynomial}. If the coefficients are real and the variable is restricted to the real numbers, then the expression is called a \textit{real polynomial}. The equation $p(x)=0$ is called a \textit{polynomial equation}.
 \end{definition}
 
 Each polynomial of one variable (or just polynomial for short) is continuous everywhere.
 
-\begin{theorem} [Fundamental Theorem of Algebra]
-    Every nonzero polynomial of one variable with complex coefficients has exactly $n$ complex roots, assuming multiplicity is counted.  
+\begin{theorem}[Fundamental Theorem of Algebra]
+    Every nonzero polynomial of one variable with complex coefficients has exactly $n$ complex roots when multiplicity is counted.
 \end{theorem}
 
 Many proofs of this famous theorem exist. They can be found in  \cite{steed2015proofs}, for example. Although we are primarily interested in \textit{real} roots, the theorem indicates exactly how many (complex) roots a polynomial must have, which is helpful for determining the set of all roots.
 
 \subsection{The Bisection Method}
 \noindent
-Text.
+The bisection method is one of the earliest methods used to find the roots of the equation $f(x)=0$ \cite{solanki2014role}. This method can only be applied to a function $f$ if it continuous on an interval $[a,b]$, and $f(a)$ and $f(b)$ have opposite signs. In this case, $a$ and $b$ are said to form a \textit{bracket} for the function. On $[a,b]$, then, the function $f$ has at least one root by the intermediate value theorem. More precisely, a corollary of this theorem known as \textit{Bolzano's theorem} states that a continuous $f$ on $[a,b]$ with $f(a)$ and $f(b)$ of opposite signs must have at least one $c \in (a,b)$ such that $f(c)=0$. For this reason, the bisection method is guaranteed to find a root, provided the continuity and sign requirements are met and the process is not limited by a maximum number of iterations or steps.
+
+Now we explain the bisection algorithm. First, we check that the function values at the endpoints have opposite signs. If they have the same sign (that is, $f(a)\cdot f(b) >0$), then the method cannot be applied. Note that if $f(a)$ or $f(b)$ are zero, then a root is found. Otherwise, we calculate the midpoint $m$ of the interval by \[m=\frac{a+b}{2}\] and check if it is a root. If it is not, then we check if $f(m)$ has the same sign as $f(a)$, in which case $a$ is replaced by $m$. Else, $b$ is replaced by $m$.
+
+This algorithm is written in Python in Appendix \ref{manualalgorithms}. To our function called \texttt{bisection} we give the bracket as well as two other variables: tolerance and the maximum number of iterations. If the value of the function is extremely close to zero, then the algorithm should terminate since a root is found. Alternatively, if the width of the bracket becomes extremely small, the process should stop as well, as this is a usual test that indicates a root has been located \cite{naseem2022novel}. Thus, the lines
+\begin{verbatim}
+    if abs(f(mid)) < tolerance or abs(b-a) < tolerance:
+      return mid, points
+\end{verbatim}
+show how the function stops and returns the approximate root \texttt{mid} (as well as a list of previous approximations or points).
+
+There are other methods that use a bracket and the intermediate value theorem to ensure a root will be found in an interval. Brent's method is a hybrid method that switches between the bisection method and two other methods to (ideally) locate the root faster. TOMS748, an algorithm published in ACM Transactions on Mathematical Software (TOMS), is another modern method that uses multiple other algorithms for fairly fast convergence, typically \cite{alefeld1995algorithm}.
 
 \subsection{Newton's Method}
 \noindent
@@ -86,7 +97,7 @@ Text.
 \appendix
 
 \section{Appendix A}
-\noindent
+\noindent \label{manualalgorithms}
 Text.
 
 \section{Appendix B}
