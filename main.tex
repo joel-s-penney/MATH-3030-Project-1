@@ -32,7 +32,7 @@
 
 \section{Introduction}
 \noindent
-Text.
+Suppose you are a physicist, studying the trajectory of a projectile as it flies through the air. Alternatively, picture yourself as a biological researcher trying to model the spread of disease in a population. Perhaps, in another case, you want to analyze costs and predict economic patterns to ensure your financial decisions are well-informed. In all of these cases, polynomials are used to represent a real situation or phenomena. ...
 
 \section{Methods}
 
@@ -94,9 +94,47 @@ Likewise, Halley's method is a variation that uses the rule \[x_{i+1} = x_i - \f
                                     maxiter=500, full_output=True)
 \end{verbatim}
 
-The bisection method and Newton's method have been programmed manually in order to more precisely examine how they work. In another Python notebook, all six of the methods mentioned have been implemented using \texttt{SciPy}. This sets a great framework for studying their strengths, efficiency, and how they sometimes fail.
+The bisection method and Newton's method have been programmed manually in order to more precisely examine how they work. In a second Python notebook, all six of the methods mentioned have been implemented using \texttt{SciPy}. This sets a great framework for studying their strengths, efficiency, and how they sometimes fail.
 
 \section{Results}
+
+\subsection{Visualizing Root-Finding Algorithms}
+\noindent
+First, we want to visualize our two main methods in action. We do this by plotting the root approximations after every iteration. Consider the polynomial $p_1(x) = x^3-7x$. In this opening example, the three roots, $0, \sqrt{7}$, and $-\sqrt{7}$, are easily found algebraically.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/greatstart.png}
+    \caption{Typical root-finder behaviour on the polynomial $p_1(x) = x^3-7x$ with $x_0=-4.5$ for Newton's method and bracket $[2, 4]$ for the bisection method.}
+    \label{greatstart}
+\end{figure}
+
+With our tolerance set to $10^{-12}$, both root-finders perform well and Newton's method takes only 7 iterations. It is usual for Newton's method to converge quickly (i.e., requiring less iterations) when the initial guess is close. Bisection converges less quickly in this example, with guesses on either side of the (true) root before the algorithm reaches the stopping criteria. Note that in this example the bisection method and Newton's method produce accurate, usable decimal approximations of $\sqrt{7}$ and $-\sqrt{7}$, respectively.
+
+Suppose we want to determine the set of all real roots of the polynomial \[p_2(x) = x^6 - 2x^5 - 3x^4 + 4x^3 + 5x^2 + x - 7\] with real coefficients. Numerical methods are highly useful here. By the Fundamental Theorem of Algebra, there are 6 complex roots, some of which may be real. With the polynomial written in descending order as above, we count 3 changes in the signs of the leading coefficients. Thus, by Descartes' Rule of Signs, there are 3 or 1 positive real roots (as well as 3 or 1 negative real roots). Testing some small positive values of $x$ we find that
+\begin{align*}
+    p_2(1) &= -1 <0,\\
+    p_2(1.5) &= 0.265625 >0,\\
+    p_2(2) &= -1 <0,\\
+    p_2(2.5) &= 20.890625 >0.
+\end{align*}
+
+By Bolzano's theorem, then, there are roots on the intervals $(1, 1.5), (1.5, 2)$, and $(2, 2.5)$. The bisection method can easily find (any of) these, as shown in Figure \ref{newpolynomial}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/newpolynomial.png}
+    \caption{The degree six polynomial $p_2(x)$ with bracket $[1, 1.5]$ and $x_0=-1.75$.}
+    \label{newpolynomial}
+\end{figure}
+
+If we examine negative $x$-values, we find that there is only one sign change and that it is somewhere around $-1.5$ (Newton's method is then well-suited to approximate this root). We conclude that there are 3 positive real roots, 1 negative real root (of multiplicity 1), and that the remaining 2 roots are non-real. Our root-finders determine the approximate set of real roots to be \[ \{-1.484,\ 1.175,\ 1.582,\ 2.105\}. \] Clearly, a combination of theory and algorithm selection helps solve problems like this.
+
+\subsection{Difficulties in Root-Finding}
+\noindent
+Text.
+
+\subsection{Wilkinson's Polynomial}
 \noindent
 Text.
 
