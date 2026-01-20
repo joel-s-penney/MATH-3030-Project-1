@@ -1,8 +1,9 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath, amssymb, amsfonts, amsthm}
-\usepackage{graphicx, tabularx, geometry, xcolor, minted}
+\usepackage{graphicx, tabularx, geometry, minted}
 \usepackage{caption, float}
 \usepackage{setspace, lipsum}
+\usepackage[table]{xcolor}
 
 \usepackage{tikz, pgfplots}
 \pgfplotsset{compat=1.18}
@@ -32,7 +33,11 @@
 
 \section{Introduction}
 \noindent
-Suppose you are a physicist, studying the trajectory of a projectile as it flies through the air. Alternatively, picture yourself as a biological researcher trying to model the spread of disease in a population. Perhaps, in another case, you want to analyze costs and predict economic patterns to ensure your financial decisions are well-informed. In all of these cases, polynomials are used to represent a real situation or phenomena. ...
+Suppose you are a physicist, studying the trajectory of a projectile as it flies through the air. Alternatively, picture yourself as a biological researcher trying to model the spread of disease in a population. Perhaps, in another case, you want to analyze costs and predict economic patterns to ensure your financial decisions are well-informed. In all of these cases, polynomials have been used to represent a real situation or phenomenon. 
+
+The roots of polynomials, or inputs that result in an output of zero, frequently have important physical or scientific meaning. Often, determining them is a problem for numerical analysis, an area of mathematics concerned with solving problems in numerical form using a constructive computational procedure \cite{gautschi2011numerical}. Various methods, known as root-finders, are commonly used today and include matrix methods, functional iterations, and hybrid methods \cite{pan2007real}. We start by considering the underlying theory for determining polynomial roots. After closely examining the bisection method and Newton's method, we combine computational approaches with crucial theory to solve root-finding problems. In doing so, we are able to see strengths and weaknesses of various root finders. Finally, we challenge six root-finding methods to determine the zeros of Wilkinson's polynomial, a notoriously difficult polynomial in root-finding. 
+
+To find polynomial roots numerically is to engage in a long line of work that is still of great interest today. The mathematics behind polynomial root-finding is very valuable, and has played an important role in many modern disciples such has computer technology and engineering \cite{naseem2022novel}.
 
 \section{Methods}
 
@@ -132,11 +137,47 @@ If we examine negative $x$-values, we find that there is only one sign change an
 
 \subsection{Difficulties in Root-Finding}
 \noindent
-Text.
+As mentioned previously, a derivative near zero may be a difficulty for Newton's method. We predict, then, that flat or horizontal regions will be a struggle for this method and possibly for the Newton-like open methods (namely secant method and Halley's method). Roots of higher multiplicity are surrounded by ``flatter'' regions, as seen in Figure \ref{flatroot}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/flatroot.png}
+    \caption{Six root-finders on the polynomial $p_3(x) = (x-5)^9$ with bracket $[-5, 22]$, initial guess $x_0 = 20$, and tolerances by default in the \texttt{SciPy} package. The right graph shows the polynomial and the left graph shows the performance of each method.}
+    \label{flatroot}
+\end{figure}
+
+With the parameters given, Newton's method requires over 150 iterations to find the root of $x=5$, whereas bracketed methods like the bisection method and TOMS748 find it in less than 50. One way we measure the root-finder's success is by comparing the absolute value of the difference between the approximated root and the known, true root. This is called absolute error and is shown in Table \ref{flaterror}.
+
+\begin{table}[h]
+\centering \onehalfspacing
+\begin{tabular}{|c|c|c|c|}
+\hline
+Root-Finder \cellcolor{lightgray} & 50 Iteration Approximation \cellcolor{lightgray} & Absolute Error \cellcolor{lightgray} & Within Tolerance \cellcolor{lightgray} \\ \hline
+Bisection   & 5.000000000000284                 & $2.84\times10^{-13}$      & \cellcolor{green!50} Yes  \\ \hline
+Brent's     & 5.0000647                        & $6.47\times10^{-5}$     & \cellcolor{red!50} No \\ \hline
+TOMS748     & 5.000000000000245                 & $2.45\times10^{-13}$     & \cellcolor{green!50} Yes  \\ \hline
+Newton's    & 5.0415                            & 0.0415        & \cellcolor{red!50} No \\ \hline
+Secant    & 5.246                             & 0.246         & \cellcolor{red!50} No \\ \hline
+Halley's    & 5.000214                          & 0.000214      & \cellcolor{red!50} No \\ \hline
+\end{tabular}
+\caption{Closeness to the true root ($x=5$) of $p_3(x)$ after 50 iterations.} \label{flaterror}
+\end{table}
+
+Unfortunately, all of the open methods were unable to find the root within the tolerance after 50 iterations, even for this straightforward polynomial and reasonable initial guess. Bracketed methods may be particularly useful for high multiplicity roots, although it is not correct to say they will always outperform open methods. The occurrence of Halley's outperforming Brent's in the above example is just one of many examples where it depends on the specific polynomial and values of $a$, $b$, $x_0$, and tolerance.
+
+Another difficulty is present when trying to find the root or roots of $p_4(x) = x^3 - 2x + 2$ with $x_0 = 1$. Applying Newton's method by hand yields the results
+\begin{align*}
+    x_0 &= 1 \\
+    x_1 = 1 - \frac{1}{1} &= 0 \\
+    x_2 = 0 - \frac{2}{-2} &= 1 \\
+    x_3 = 1 - \frac{1}{1} &= 0 \\
+    \vdots
+\end{align*}
+which shows the oscillatory nature of this root-finder under these conditions. When this is replicated in the program, Newton's method and Halley's method both completely fail to locate the root, despite $x_0 = 1$ being a fairly close guess to the actual root of $x \approx -1.763$. This shows another limitation of Newton's method and demonstrates that oscillation or a similar phenomenon may affect the other open methods. Moving the initial appropriation to $x_0 = 1.25$, for example, is a simple fix that allows Newton's and Halley's methods to converge faster than, say, bisection with a small bracket.
 
 \subsection{Wilkinson's Polynomial}
 \noindent
-Text.
+It is common to use \textit{test polynomials} with well-known roots to determine different weaknesses of root-finding programs or methods \cite{lang1994polynomial}. Consider one such polynomial, Wilkinson's polynomial, \[w(x) = \prod_{i=1}^{20}(x-i) = (x-1)(x-2)(x-3)\cdots(x-20)\] which has roots at $x = 1, 2, 3, \dots, 20$. 
 
 \section{Conclusion}
 \noindent
