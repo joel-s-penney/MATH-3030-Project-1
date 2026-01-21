@@ -221,18 +221,22 @@ Considering the absolute errors at initial guesses of $-60$ and $-10$, we can us
     E_N(x_0) &\approx -0.44x_0 -2.87 \\
     E_S(x_0) &\approx -0.56x_0 -2.26
 \end{align*}
-for the interval $-60 \le x_0 \le -10$ we have considered. These results show that the simple Newton's method is fairly useful and comparable to methods such as secant method in this context. Also, Halley's method is well-equipped to deal with staring guesses that are far away from the root, in this specific case. Remember, however, that open-methods are not always guaranteed to converge like bracketed methods are. As mentioned previously, specifics such as the inputs to the algorithms and the polynomial or function itself are all factors that affect which method will converge the fastest; none of these methods are superior in all contexts and they all have advantages and disadvantages.  
+for the interval $-60 \le x_0 \le -10$ we have considered. On this interval, as the initial guess tends to the true root, the error decreases, which is expected. These results show that Newton's method is fairly useful and comparable to methods such as secant method in this context. Also, Halley's method is well-equipped to deal with starting guesses that are far away from the root, in this specific case. Remember, however, that open-methods are not always guaranteed to converge like bracketed methods are. As mentioned previously, specifics such as the inputs to the algorithms and the polynomial or function itself are all factors that affect which method will converge the fastest; none of these methods are superior in all contexts and they all have advantages and disadvantages.  
 
 \section{Conclusion}
 \noindent
-By understanding how two famous root-finders work, we able to explain why the bisection method must converge to a root in an interval and why horizontal regions pose a threat to Newton's method. Our Python code allowed for visualization of the two main methods, and we used important concepts such as the Fundamental Theorem of Algebra to solve root-finding problems. Additionally, we extended out study to a total of six algorithms and observed promising results for methods like TOMS748 and Halley's method. Using Wilkinson's polynomial and a limited number of iterations, we tracked absolute error remarked about its relationship to the initial approximation for open methods. Throughout, we observed that there is no usual ``best'' method, as each has the potential to outperform the others depending on the specifics of the problem and polynomial considered.
+By understanding how two famous root-finders work, we able to explain why the bisection method must converge to a root in an interval and why horizontal regions pose a threat to Newton's method. Our Python code allowed for visualization of the two main methods, and we used important concepts such as the Fundamental Theorem of Algebra to solve root-finding problems. Additionally, we extended our study to a total of six algorithms and observed promising results for methods like TOMS748 and Halley's method. Using Wilkinson's polynomial and a limited number of iterations, we tracked absolute error and remarked about its relationship to the initial approximation for open methods. Throughout, we observed that there is no usual ``best'' method, as each has the potential to outperform the others depending on the specifics of the problem and polynomial considered.
 
-... % (NEXT STEPS)
+Future research can build upon these findings and explorations. Building on the Figure \ref{errorplot} approach, one could plot the absolute error, or perhaps the relative error, across more $x$-values and find curves that reveal more precisely how open methods deal with far initial guesses. Alternatively, it would be interesting to study root-finder success in the context of high multiplicity roots: are there more efficient ways to find even multiplicity roots specifically? What about high multiplicity roots next to each other? Trying functions other than polynomials in another clear next step. Developing new techniques or modifying existing algorithms could lead to very useful methods in some contexts.
+
+Polynomial root-finding will remain an important topic as modelling and computing applications continue to grow. Clearly, we have demonstrated that the best suited root-finders (and supporting theory) will differ based on the polynomial of interest, the tolerance or error desired, and the initial parameters for each method.
 
 \addcontentsline{toc}{section}{Acknowledgements}
 \section*{Acknowledgements}
 \noindent
-Text.
+I would like to thank Dr. Alex Bihlo for his feedback and guidance throughout the project.
+
+The following is a declaration on the use of generative artificial intelligence. ...
 
 \addcontentsline{toc}{section}{References}
 % \include{ref}
@@ -248,8 +252,8 @@ Text.
 \noindent
 Text.
 
-\section{Appendix B}
-\noindent
-Text.
+%\section{Appendix B}
+%\noindent
+%Text.
 
 \end{document}
