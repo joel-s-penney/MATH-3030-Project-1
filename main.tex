@@ -177,11 +177,57 @@ which shows the oscillatory nature of this root-finder under these conditions. W
 
 \subsection{Wilkinson's Polynomial}
 \noindent
-It is common to use \textit{test polynomials} with well-known roots to determine different weaknesses of root-finding programs or methods \cite{lang1994polynomial}. Consider one such polynomial, Wilkinson's polynomial, \[w(x) = \prod_{i=1}^{20}(x-i) = (x-1)(x-2)(x-3)\cdots(x-20)\] which has roots at $x = 1, 2, 3, \dots, 20$. 
+It is common to use \textit{test polynomials} with well-known roots to determine different weaknesses of root-finding programs or methods \cite{lang1994polynomial}. Consider one such polynomial, Wilkinson's polynomial, \[w(x) = \prod_{i=1}^{20}(x-i) = (x-1)(x-2)(x-3)\cdots(x-20)\] which has roots at $x = 1, 2, 3, \dots, 20$. We first give a large bracket and central initial guess to the root-finders.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/wilkinsonwide.png}
+    \caption{Root-finding of $w(x)$ on the interval $[6.2, 15.9]$ and $x_0 = 11.6$.}
+    \label{wilkinsonwide}
+\end{figure}
+
+Interestingly, the methods find many different (but correct) roots when given the same staring information. In the order the root-finders appear in Figure \ref{wilkinsonwide}, they locate the roots 9, 7, 9, 13, 12, and 13 for Halley's as indicated by the red dot.
+
+\textit{Real root isolation} involves finding intervals that are disjoint and each contain one real root. If we are able to find these intervals and apply bracketed methods, locating the roots is generally easy. This is one strategy to consider when working with the bisection method, Brent's method, and TOMS748. While bisection is fairly easy to implement by hand, it usually lacks in efficiency and takes longer than the other two methods in its class.
+
+In one final investigation, we observer how Newton's, secant, and Halley's methods are able to locate the root of $x=1$ for the Wilkinson's polynomial. After running many tests with initial guesses less than 0, we observed that the root of $x=1$ is usually found if the number of iterations is unrestricted. If we restrict the maximum number of iterations to 15 and plot the absolute error as described earlier, we obtain Figure \ref{errorplot}.
+
+\begin{figure}[h] \centering
+\begin{tikzpicture}
+\begin{axis}[ybar, 
+enlargelimits=0.2,
+width=14cm,
+height=6cm,
+title={Open Method Performance After 15 Iterations},
+xlabel={Initial Approximation $x_0$},
+ylabel={Absolute Error},
+symbolic x coords={-60,-50,-40,-30,-20,-10},
+xtick=data,
+]
+\addplot coordinates {(-60,23.5) (-50,18.9) (-40,14.4) (-30,9.96) (-20,5.57)  (-10,1.521)};
+\addplot coordinates {(-60,31.6) (-50,25.8) (-40,20.2) (-30,14.5) (-20,8.82)  (-10,3.384)};
+\addplot coordinates {(-60,7.23) (-50,5.19) (-40,3.23) (-30,1.43) (-20,0.117) (-10,0)};
+\legend{\ Newton's,\ Secant,\ Halley's}
+\end{axis}
+\end{tikzpicture}
+\caption{Absolute error of various root-finders based on $x_0$ for the Wilkinson polynomial and known root $x=1$.}
+\label{errorplot}
+\end{figure}
+
+It may be tempting to conclude there is a linear relationship between the absolute error and the initial approximation based, visually, on the graph. In reality, the relationship does appear \textit{approximately} linear for Newton's method and secant method \textit{on this particular interval}. Halley's method, however, is not approximately linear because the differences in error start quite large and then decrease rapidly as the initial approximation gets closer and closer to the true root.
+
+Considering the absolute errors at initial guesses of $-60$ and $-10$, we can use the rate of change formula and slope-intercept formula to approximate the relationship between the absolute error (subscript $N$ for Newton's and $S$ for secant) and initial approximation in this specific case. The approximations are
+\begin{align*}
+    E_N(x_0) &\approx -0.44x_0 -2.87 \\
+    E_S(x_0) &\approx -0.56x_0 -2.26
+\end{align*}
+for the interval $-60 \le x_0 \le -10$ we have considered. These results show that the simple Newton's method is fairly useful and comparable to methods such as secant method in this context. Also, Halley's method is well-equipped to deal with staring guesses that are far away from the root, in this specific case. Remember, however, that open-methods are not always guaranteed to converge like bracketed methods are. As mentioned previously, specifics such as the inputs to the algorithms and the polynomial or function itself are all factors that affect which method will converge the fastest; none of these methods are superior in all contexts and they all have advantages and disadvantages.  
 
 \section{Conclusion}
 \noindent
-Text.
+By understanding how two famous root-finders work, we able to explain why the bisection method must converge to a root in an interval and why horizontal regions pose a threat to Newton's method. Our Python code allowed for visualization of the two main methods, and we used important concepts such as the Fundamental Theorem of Algebra to solve root-finding problems. Additionally, we extended out study to a total of six algorithms and observed promising results for methods like TOMS748 and Halley's method. Using Wilkinson's polynomial and a limited number of iterations, we tracked absolute error remarked about its relationship to the initial approximation for open methods. Throughout, we observed that there is no usual ``best'' method, as each has the potential to outperform the others depending on the specifics of the problem and polynomial considered.
+
+... % (NEXT STEPS)
 
 \addcontentsline{toc}{section}{Acknowledgements}
 \section*{Acknowledgements}
