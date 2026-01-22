@@ -236,7 +236,7 @@ Polynomial root-finding will remain an important topic as modelling and computin
 \noindent
 I would like to thank Dr. Alex Bihlo for his feedback and guidance throughout the project.
 
-The following is a declaration on the use of generative artificial intelligence. ...
+The following is a declaration on the use of generative artificial intelligence. Generative AI was used on two parts of this project. First, ChatGPT was used to improve upon the plot-generating code and show the previous approximations with an appropriate legend. Second, generative AI was used to define Wilkinson's polynomial and its derivatives in the code, which was a better choice than hard-coding the polynomial. Both of these uses were checked over to ensure accuracy. 
 
 \addcontentsline{toc}{section}{References}
 % \include{ref}
@@ -248,9 +248,76 @@ The following is a declaration on the use of generative artificial intelligence.
 \newpage
 \appendix
 
-\section{Appendix A}\label{manualalgorithms}
-\noindent
-Text.
+\section{Root-Finding Algorithms in Python}\label{manualalgorithms}
+
+\subsection{The Bisection Method}
+\small
+\begin{verbatim}
+def bisection(a, b, tolerance, maximum_iter):
+
+  points = []
+
+  # If the endpoints are zero, then they are a root
+  if abs(f(a)) < tolerance:
+    return a, [a]
+  if abs(f(b)) < tolerance:
+    return b, [b]
+
+  # Check that the method can be applied
+  if f(a)*f(b) > 0:
+    print("Error: f(a) and f(b) do not have opposite signs.")
+    return None, []
+
+  # Loop over a maximum number of iterations
+  for i in range(maximum_iter):
+    mid = (a+b)/2
+    points.append(mid)
+
+    # If f(mid) is zero, then it is a root
+    if abs(f(mid)) < tolerance or abs(b-a) < tolerance:
+      return mid, points
+    # Otherwise, if f(a) and f(mid) same sign, then mid is new endpoint a
+    elif f(a)*f(mid) > 0:
+      a = mid
+    # Else, mid is the new endpoint b
+    else:
+      b = mid
+
+  print("Error: Root not found within tolerance for the maximum iterations.")
+  return None, points
+\end{verbatim}
+
+\newpage
+
+\subsection{Newton's Method}
+\small
+\begin{verbatim}
+def newton(x0, tolerance, maximum_iter):
+
+  points = [x0]
+
+  # Loop over a maximum number of iterations
+  for i in range(maximum_iter):
+
+    # If the derivative at x0 is zero, then divide by zero error
+    if abs(df(x0)) < 1e-10:
+      print("Error: Derivative is zero.")
+      return None, points
+
+    # Main step: x0, f(x0), and df(x0) gives the next approximation
+    xnew = x0 - (f(x0)/df(x0))
+    points.append(xnew)
+
+    # If f(xnew) is zero, then it is the root
+    if abs(f(xnew)) < tolerance or abs(xnew-x0) < tolerance:
+      return xnew, points
+
+    # xnew is the next x0 guess
+    x0 = xnew
+
+  print("Error: Root not found.")
+  return None, points
+\end{verbatim}
 
 %\section{Appendix B}
 %\noindent
